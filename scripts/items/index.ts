@@ -17,7 +17,13 @@ async function main() {
 
     const items = await Promise.all(itemPromises);
 
-    await writeFile("./data/items.json", JSON.stringify(items));
+    const weaponsAndArmor = items
+      .flatMap((item) => item)
+      .filter(
+        (item) => item.category === "weapon" || item.category === "armor"
+      );
+
+    await writeFile("./data/items.json", JSON.stringify(weaponsAndArmor));
   } catch (error) {
     console.error(error);
   }
