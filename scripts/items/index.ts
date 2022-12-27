@@ -1,13 +1,18 @@
 import * as _ from "lodash";
-import { writeFile } from "node:fs/promises";
+import { writeFile, readFile } from "node:fs/promises";
+import { fetchIds } from "../../utils/fetchIds";
 
 async function main() {
   try {
-    const itemIdResponse = await fetch("https://api.flyff.com/item");
-    const itemIdData: number[] = await itemIdResponse.json();
+    const itemIds = await fetchIds("item");
+    const classes: any[] = JSON.parse(
+      await readFile("./data/classes.json", {
+        encoding: "utf-8",
+      })
+    );
 
     // put item ids into chunks to get around large request error
-    const chunkedItemIds = _.chunk(itemIdData, 399);
+    const chunkedItemIds = chunkArray(itemIds, 399);
 
     const itemPromises = chunkedItemIds.map(async (item) => {
       return await (
@@ -17,16 +22,22 @@ async function main() {
 
     const items = await Promise.all(itemPromises);
 
-    const weaponsAndArmor = items
+    const itemsWithClassNames = items
       .flatMap((item) => item)
-      .filter(
-        (item) => item.category === "weapon" || item.category === "armor"
-      );
+      .filter((item) => item.category === "weapon" || item.category === "armor")
+      .map((item) => ({
+        ...item,
+        class: classes.find((className) => className.id === item.class),
+      }));
 
-    await writeFile("./data/items.json", JSON.stringify(weaponsAndArmor));
+    await writeFile("./data/items.json", JSON.stringify(itemsWithClassNames));
   } catch (error) {
     console.error(error);
   }
+}
+
+function chunkArray(array: unknown[], sizePerChunk: number) {
+  return _.chunk(array, sizePerChunk);
 }
 
 main();
