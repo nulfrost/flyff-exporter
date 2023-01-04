@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "items": "node -r @swc-node/register scripts/items/index.ts",
-    "classes": "node -r @swc-node/register scripts/classes/index.ts"
+    "items": "node -r @swc-node/register src/scripts/items.ts",
+    "classes": "node -r @swc-node/register src/scripts/classes.ts"
   },
   "keywords": [],
   "author": "Dane Miller",

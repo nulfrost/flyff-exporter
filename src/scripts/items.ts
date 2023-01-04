@@ -1,12 +1,12 @@
 import * as _ from "lodash";
 import { writeFile, readFile } from "node:fs/promises";
-import { fetchIds } from "../../utils/fetchIds";
+import { fetchIds } from "../utils/fetchIds";
 
 async function main() {
   try {
     const itemIds = await fetchIds("item");
     const classes: any[] = JSON.parse(
-      await readFile("./data/classes.json", {
+      await readFile("./src/data/classes.json", {
         encoding: "utf-8",
       })
     );
@@ -30,7 +30,10 @@ async function main() {
         class: classes.find((className) => className.id === item.class),
       }));
 
-    await writeFile("./data/items.json", JSON.stringify(itemsWithClassNames));
+    await writeFile(
+      "./src/data/items.json",
+      JSON.stringify(itemsWithClassNames)
+    );
   } catch (error) {
     console.error(error);
   }

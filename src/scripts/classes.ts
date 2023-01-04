@@ -1,5 +1,5 @@
 import { writeFile } from "node:fs/promises";
-import { fetchIds } from "../../utils/fetchIds";
+import { fetchIds } from "../utils/fetchIds";
 
 async function main() {
   try {
@@ -9,7 +9,16 @@ async function main() {
       await fetch(`https://api.flyff.com/class/${classIds.join(",")}`)
     ).json();
 
-    await writeFile("./data/classes.json", JSON.stringify(classes));
+    const cleanedClassDataResponse = classes.map((className) => ({
+      id: className.id,
+      name: className.name,
+      icon: className.icon,
+    }));
+
+    await writeFile(
+      "./src/data/classes.json",
+      JSON.stringify(cleanedClassDataResponse)
+    );
   } catch (error) {
     console.error(error);
   }
