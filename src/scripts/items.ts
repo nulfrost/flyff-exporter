@@ -6,7 +6,7 @@ async function main() {
   try {
     const itemIds = await fetchIds("item");
     const classes: any[] = JSON.parse(
-      await readFile("./src/data/classes.json", {
+      await readFile("./src/data/jobs.json", {
         encoding: "utf-8",
       })
     );
@@ -27,7 +27,7 @@ async function main() {
       .filter((item) => item.category === "weapon" || item.category === "armor")
       .map((item) => ({
         ...item,
-        class: classes.find((className) => className.id === item.class),
+        job: classes.find((className) => className.id === item.class),
       }));
 
     await writeFile(

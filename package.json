@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "items": "node -r @swc-node/register src/scripts/items.ts",
-    "classes": "node -r @swc-node/register src/scripts/classes.ts"
+    "jobs": "node -r @swc-node/register src/scripts/jobs.ts",
+    "skills": "node -r @swc-node/register src/scripts/skills.ts",
+    "awake": "node -r @swc-node/register src/scripts/skillawake.ts"
   },
   "keywords": [],
   "author": "Dane Miller",

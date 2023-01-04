@@ -16,7 +16,7 @@ async function main() {
     }));
 
     await writeFile(
-      "./src/data/classes.json",
+      "./src/data/jobs.json",
       JSON.stringify(cleanedClassDataResponse)
     );
   } catch (error) {

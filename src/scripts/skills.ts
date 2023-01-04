@@ -10,7 +10,7 @@ async function main() {
     ).json();
 
     const classes: any[] = JSON.parse(
-      await readFile("./data/classes.json", {
+      await readFile("./src/data/jobs.json", {
         encoding: "utf-8",
       })
     );
@@ -27,7 +27,6 @@ async function main() {
       "./src/data/skills.json",
       JSON.stringify(cleanedSkillDataResponse)
     );
-    console.log(skills);
   } catch (error) {
     console.error(error);
   }
