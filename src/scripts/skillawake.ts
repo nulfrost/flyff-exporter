@@ -11,15 +11,20 @@ async function main() {
         encoding: "utf-8",
       })
     );
-    const cleanedSkillAwakeData = Object.entries(skillAwakes).map(
-      ([key, value]) => ({
+    const cleanedSkillAwakeData = Object.entries(skillAwakes)
+      .map(([key, value]) => ({
         weaponType: key,
         skillAwakes: Object.entries(value.skills).map(([key, value]) => ({
-          [`${skills.find((skill) => skill.id === Number(key)).name.en}`]:
-            value,
+          id: key,
+          icon: `https://api.flyff.com/image/skill/colored/${
+            skills.find((skill) => skill.id === Number(key)).icon
+          }`,
+          level: skills.find((skill) => skill.id === Number(key)).level,
+          name: `${skills.find((skill) => skill.id === Number(key)).name.en}`,
+          probabilities: value,
         })),
-      })
-    );
+      }))
+      .filter((weapon) => weapon.weaponType !== "shield");
     await writeFile(
       "./src/data/awake.json",
       JSON.stringify(cleanedSkillAwakeData)

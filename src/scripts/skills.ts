@@ -20,6 +20,7 @@ async function main() {
       name: skill.name,
       description: skill.description,
       icon: skill.icon,
+      level: skill.level,
       job: classes.find((className) => skill.class === className.id),
     }));
 
